@@ -16,20 +16,27 @@
  * limitations under the License.
  */
 
-package org.apache.xtable.model.storage;
+package org.apache.xtable.paimon;
+
+import java.util.Collections;
+import java.util.Map;
+
+import lombok.Builder;
+import lombok.NonNull;
+import lombok.Value;
+
+import org.apache.xtable.conversion.CatalogConfig;
 
 /**
- * Default constants for supported Table Formats
- *
- * @since 0.1
+ * Paimon requires a catalog to perform any operation, if no catalog is provided the default
+ * catalog (FileSystemCatalog) is used. For syncing Paimon to multiple
+ * catalogs, you can use {@link org.apache.xtable.conversion.ExternalCatalogConfig} instead which
+ * allows syncing the latest version of Paimon metadata to multiple catalogs.
  */
-public class TableFormat {
-  public static final String HUDI = "HUDI";
-  public static final String ICEBERG = "ICEBERG";
-  public static final String DELTA = "DELTA";
-  public static final String PAIMON = "PAIMON";
-
-  public static String[] values() {
-    return new String[] {"HUDI", "ICEBERG", "DELTA", "PAIMON"};
-  }
+@Value
+@Builder
+public class PaimonCatalogConfig implements CatalogConfig {
+  @NonNull String catalogName;
+  @NonNull String catalogImpl;
+  @NonNull @Builder.Default Map<String, String> catalogOptions = Collections.emptyMap();
 }

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package org.apache.xtable.hms;
 
 import static org.apache.xtable.catalog.CatalogUtils.toHierarchicalTableIdentifier;
@@ -35,6 +35,7 @@ import org.apache.xtable.exception.NotSupportedException;
 import org.apache.xtable.hms.table.DeltaHMSCatalogTableBuilder;
 import org.apache.xtable.hms.table.HudiHMSCatalogTableBuilder;
 import org.apache.xtable.hms.table.IcebergHMSCatalogTableBuilder;
+import org.apache.xtable.hms.table.PaimonHMSCatalogTableBuilder;
 import org.apache.xtable.model.catalog.CatalogTableIdentifier;
 import org.apache.xtable.model.catalog.HierarchicalTableIdentifier;
 import org.apache.xtable.model.storage.TableFormat;
@@ -50,6 +51,8 @@ public class HMSCatalogTableBuilderFactory {
         return new DeltaHMSCatalogTableBuilder();
       case TableFormat.HUDI:
         return new HudiHMSCatalogTableBuilder(hmsCatalogConfig, configuration);
+      case TableFormat.PAIMON:
+        return new PaimonHMSCatalogTableBuilder();
       default:
         throw new NotSupportedException("Unsupported table format: " + tableFormat);
     }

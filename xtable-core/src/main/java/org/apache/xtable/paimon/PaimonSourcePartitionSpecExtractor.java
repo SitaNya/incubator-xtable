@@ -16,20 +16,16 @@
  * limitations under the License.
  */
 
-package org.apache.xtable.model.storage;
+package org.apache.xtable.paimon;
+
+import java.util.Map;
+
+import org.apache.xtable.spi.extractor.SourcePartitionSpecExtractor;
 
 /**
- * Default constants for supported Table Formats
- *
- * @since 0.1
+ * Partition spec extractor interface specifically designed for Paimon to parse partition values
+ * appropriately.
  */
-public class TableFormat {
-  public static final String HUDI = "HUDI";
-  public static final String ICEBERG = "ICEBERG";
-  public static final String DELTA = "DELTA";
-  public static final String PAIMON = "PAIMON";
-
-  public static String[] values() {
-    return new String[] {"HUDI", "ICEBERG", "DELTA", "PAIMON"};
-  }
+public interface PaimonSourcePartitionSpecExtractor extends SourcePartitionSpecExtractor {
+  Map<String, String> getPathToPartitionFieldFormat();
 }
